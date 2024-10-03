@@ -1,0 +1,20 @@
+My code begins with processing the data. process_data_as_df() takes a file from the data link provided, and reads it as
+a dataframe so that we can work with it. Next is the function ratings_data_preprocessed(). This calls
+process_data_as_df() on u.data (the ratings data) and drops the timestamp column. It returns a Surprise data object
+created from the dataframe, so that we can run collaborative filtering algorithms directly on the object.
+
+The functions best_SVD_parameters() and best_KNN_parameters() find the optimal parameters for their respective models.
+In each function, I define a grid of the parameters that I want to try, then run GridSearchCV with the appropriate
+collaborative filtering model. Each function prints the best RMSE and MAE score, the combination of parameters that
+gives the best RMSE score, and the mean and standard deviation of RMSE and MAE. best_KNN_parameters() takes user_data
+as a parameter of the function. I wanted to find the optimal parameters using user-based filtering, and using item-based
+filtering.
+
+The function hybrid_model() runs a regression using the best two individual models. I hard-coded SVD and KNN models with
+the optimal parameters inside this function. I split the data into training and test sets, and, for each model,
+extracted the predictions on the test sets. I then ran a linear regression to find the optimal weights for each model in
+a pair. hybrid_model() prints the model weights, the RMSE mean and standard deviation, and the MAE mean and standard
+deviation.
+
+All of the code that I ran outside of the functions is left in and commented out. So, my results can be reproduced
+by simply uncommenting these lines and running the code.
